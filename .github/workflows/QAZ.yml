@@ -1,7 +1,7 @@
 # Use this workflow to initialize your repository with the fimware you need for your keyboard
 # if you have multiple keyboards, you need to have 1 copy of this file per keyboard
 # rename the name below so that you can see the different keyboards in your github actions
-name: 4x4MacroPad
+name: QAZ
 
 # You will need to manually trigger this workflow
 on:  ['workflow_dispatch']
@@ -10,12 +10,12 @@ jobs:
   initialize-firmware:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false 
-      max-parallel: 1  
+      fail-fast: false
+      max-parallel: 1
       matrix:
-        # Replace the following with the keyboard you want to setup.  
+        # Replace the following with the keyboard you want to setup.
         # Only 1 keyboard is supported.  For more keyboards, copy and rename this file.
-        keyboard: ['4x4Tutorials']
+        keyboard: ['QAZ']
         # Keymap of the keyboard to setup.  Multiple keymaps can be setup following this example: ['default','jpconstantineau']
         keymap: ['base']
         # keyboard configuration. Multiple configs can be setup following this example: ['left','right']
@@ -71,7 +71,7 @@ jobs:
           cp BlueMicro_BLE/firmware/keyboards/${{ matrix.keyboard }}/config/${{ matrix.keyboard_config }}/keyboard_config.h ${{ steps.job_variables.outputs.firmware-name }}
           cp ${{ steps.job_variables.outputs.hardware-config }} ${{ steps.job_variables.outputs.firmware-name }}
           cp BlueMicro_BLE/firmware/keyboards/${{ matrix.keyboard }}/keymaps/${{ matrix.keymap }}/keymap.h ${{ steps.job_variables.outputs.firmware-name }}
-          cp BlueMicro_BLE/firmware/keyboards/${{ matrix.keyboard }}/keymaps/${{ matrix.keymap }}/keymap.cpp ${{ steps.job_variables.outputs.firmware-name }} 
+          cp BlueMicro_BLE/firmware/keyboards/${{ matrix.keyboard }}/keymaps/${{ matrix.keymap }}/keymap.cpp ${{ steps.job_variables.outputs.firmware-name }}
       - name: remove BlueMicro_BLE repository
         if: ${{ steps.job_conditions.outputs.firmware-here == 'false' }}
         run: |
@@ -93,7 +93,7 @@ jobs:
       # configure the Arduino CLI on the system.
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
-        
+
       - name: Install BSP and Libraries
         env:
           BSP_URL: https://github.com/jpconstantineau/Community_nRF52_Arduino/releases/latest/download/package_jpconstantineau_boards_index.json
